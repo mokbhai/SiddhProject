@@ -1,0 +1,9 @@
+version: '3'
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5050:5050"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=mokshitjain18@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=123456

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "a/GYroWRZEvORKCsFdn1taycJqj2kxUt0eq/qQYdN7o=",
+  "Source": "SendEmail",
+  "BasePath": "_content/SendEmail",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

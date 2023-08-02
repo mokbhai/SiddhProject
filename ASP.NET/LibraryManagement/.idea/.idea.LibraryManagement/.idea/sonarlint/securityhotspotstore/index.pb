@@ -1,0 +1,23 @@
+
+]
+-LibraryManagement.API/Options/OptionsConst.cs,a/7/a7a1c3793bbf7717fb060b9ac932c8a388369ccf
+d
+4LibraryManagement.API/Properties/launchSettings.json,8/6/860dda5fbc02db0db0913bed6837b27252dcbc68
+E
+LibraryManagement.sln,9/d/9d9e26f61b612e4c61c61ba73f52f0690986401b
+_
+/LibraryManagement.API/Options/DatabaseConfig.cs,1/8/18ca28f6b88e8e3b000262de68e8023129c1b03b
+V
+&LibraryManagement.API/appsettings.json,a/c/ac9efc7466c5bd41f93c6900835c8fe60c27cb9c
+n
+>LibraryManagement.API/Controllers/WeatherForecastController.cs,e/1/e19e0e0cfd80c2b65c5a4a25e8268492237417e9
+b
+2LibraryManagement.API/appsettings.Development.json,b/b/bb404f63c7d9f1010ef070611a20fff34962e204
+b
+2LibraryManagement.API/LibraryManagement.API.csproj,3/b/3b666eff35a472673b7e0d0fd4bb023004260b96
+P
+ LibraryManagement.API/Program.cs,b/6/b66222a0411050130e0975a884dbbfab1edbe6ef
+Z
+*LibraryManagement.API/Entities/Entities.cs,1/5/15bb9875c72019cc4e000ea2cd66870d35b787e6
+^
+.LibraryManagement.API/DBConfig/AppDbContext.cs,9/5/954089cf32e469c4048062aa6dcf85f199dd632c
