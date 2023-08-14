@@ -9,6 +9,7 @@
       "DapperCRUD/1.0.0": {
         "dependencies": {
           "Dapper": "2.0.143",
+          "Microsoft.AspNetCore.Authentication.Google": "7.0.10",
           "Microsoft.AspNetCore.OpenApi": "7.0.10",
           "Swashbuckle.AspNetCore": "6.5.0",
           "System.Data.SqlClient": "4.8.5"
@@ -22,6 +23,14 @@
           "lib/net5.0/Dapper.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.0.143.55328"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Google/7.0.10": {
+        "runtime": {
+          "lib/net7.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "assemblyVersion": "7.0.10.0",
+            "fileVersion": "7.0.1023.36439"
           }
         }
       },
@@ -172,6 +181,13 @@
       "sha512": "sha512-Vh0U+Fins3IpS7APUlrzga3+1mswWngB5fZ0xj4w+FQR5JhJzA5uHV5rSepkahvmshNZUA0YcHtae9vFQpiVTw==",
       "path": "dapper/2.0.143",
       "hashPath": "dapper.2.0.143.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.Google/7.0.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HwB4AjAzp+wn5fglKUr0FB6uIDTXrBX3m0UiLSpVzZZJQOAYOwJfC6eVcSlGXc+NysQQ4fhR2+L0BDx0zI1NzQ==",
+      "path": "microsoft.aspnetcore.authentication.google/7.0.10",
+      "hashPath": "microsoft.aspnetcore.authentication.google.7.0.10.nupkg.sha512"
     },
     "Microsoft.AspNetCore.OpenApi/7.0.10": {
       "type": "package",

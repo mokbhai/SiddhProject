@@ -38,3 +38,4 @@ S:\SiddhProjects\ASP.NET\DapperCRUD\DapperCRUD\obj\Debug\net7.0\refint\DapperCRU
 S:\SiddhProjects\ASP.NET\DapperCRUD\DapperCRUD\obj\Debug\net7.0\DapperCRUD.pdb
 S:\SiddhProjects\ASP.NET\DapperCRUD\DapperCRUD\obj\Debug\net7.0\DapperCRUD.genruntimeconfig.cache
 S:\SiddhProjects\ASP.NET\DapperCRUD\DapperCRUD\obj\Debug\net7.0\ref\DapperCRUD.dll
+S:\SiddhProjects\ASP.NET\DapperCRUD\DapperCRUD\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.Google.dll
