@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "hLBMpfrpkzQFKbLqwRpONB10sxHUxAojorpMRfbVqIezl45tYZVZMVvX6NPzTXWV0lWSXIu5D0ARU1xJFoDEBQ==",
+  "dgSpecHash": "T/EJfFQLGmCWpFLu8QGvxTEBD/k8EZLy/XsVckMUVmkXtbNHil2ScbOZUrbsEJkZEsKBRmNWqZY3PtPWM6ePgQ==",
   "success": true,
   "projectFilePath": "S:\\SiddhProjects\\ASP.NET\\DapperCRUD\\DapperCRUD\\DapperCRUD.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Mokshit\\.nuget\\packages\\dapper\\2.0.143\\dapper.2.0.143.nupkg.sha512",
+    "C:\\Users\\Mokshit\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\7.0.10\\microsoft.aspnetcore.authentication.google.7.0.10.nupkg.sha512",
     "C:\\Users\\Mokshit\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.10\\microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
     "C:\\Users\\Mokshit\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\Mokshit\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
