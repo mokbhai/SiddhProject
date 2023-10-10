@@ -1,0 +1,26 @@
+﻿<Properties StartupConfiguration="{3BD7993B-BE26-4088-B2FA-85D65852F6EE}|https">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.LibraryManagement.API PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="LibraryManagement.API/Program.cs">
+    <Files>
+      <File FileName="LibraryManagement.API/appsettings.json" Line="6" Column="6" />
+      <File FileName="LibraryManagement.API/Program.cs" Line="60" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="LibraryManagement">
+            <Node name="LibraryManagement.API" expanded="True">
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+</Properties>

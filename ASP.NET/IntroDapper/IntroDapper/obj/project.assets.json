@@ -502,26 +502,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Mokshit\\.nuget\\packages\\": {}
+    "/Users/mokshitjain/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "S:\\SiddhProjects\\ASP.NET\\IntroDapper\\IntroDapper\\IntroDapper.csproj",
+      "projectUniqueName": "/Users/mokshitjain/Projects/SiddhProject/ASP.NET/IntroDapper/IntroDapper/IntroDapper.csproj",
       "projectName": "IntroDapper",
-      "projectPath": "S:\\SiddhProjects\\ASP.NET\\IntroDapper\\IntroDapper\\IntroDapper.csproj",
-      "packagesPath": "C:\\Users\\Mokshit\\.nuget\\packages\\",
-      "outputPath": "S:\\SiddhProjects\\ASP.NET\\IntroDapper\\IntroDapper\\obj\\",
+      "projectPath": "/Users/mokshitjain/Projects/SiddhProject/ASP.NET/IntroDapper/IntroDapper/IntroDapper.csproj",
+      "packagesPath": "/Users/mokshitjain/.nuget/packages/",
+      "outputPath": "/Users/mokshitjain/Projects/SiddhProject/ASP.NET/IntroDapper/IntroDapper/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Mokshit\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/mokshitjain/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -565,7 +563,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.307/RuntimeIdentifierGraph.json"
       }
     }
   }

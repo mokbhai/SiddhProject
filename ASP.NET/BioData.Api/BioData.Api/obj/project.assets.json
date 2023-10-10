@@ -100,19 +100,19 @@
     ]
   },
   "packageFolders": {
-    "/home/mok/.nuget/packages/": {}
+    "/Users/mokshitjain/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/mok/SiddhCoder/Projects/BioData.Api/BioData.Api/BioData.Api.csproj",
+      "projectUniqueName": "/Users/mokshitjain/Projects/SiddhProject/ASP.NET/BioData.Api/BioData.Api/BioData.Api.csproj",
       "projectName": "BioData.Api",
-      "projectPath": "/home/mok/SiddhCoder/Projects/BioData.Api/BioData.Api/BioData.Api.csproj",
-      "packagesPath": "/home/mok/.nuget/packages/",
-      "outputPath": "/home/mok/SiddhCoder/Projects/BioData.Api/BioData.Api/obj/",
+      "projectPath": "/Users/mokshitjain/Projects/SiddhProject/ASP.NET/BioData.Api/BioData.Api/BioData.Api.csproj",
+      "packagesPath": "/Users/mokshitjain/.nuget/packages/",
+      "outputPath": "/Users/mokshitjain/Projects/SiddhProject/ASP.NET/BioData.Api/BioData.Api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/mok/.nuget/NuGet/NuGet.Config"
+        "/Users/mokshitjain/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -161,7 +161,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.305/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.307/RuntimeIdentifierGraph.json"
       }
     }
   },
