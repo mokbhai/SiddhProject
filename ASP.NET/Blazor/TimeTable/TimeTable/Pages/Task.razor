@@ -1,0 +1,51 @@
+﻿@page "/"
+
+@using Blazored.LocalStorage
+
+<h3>Local Storage Demo</h3>
+
+<div>
+    <label for="inputValue">Enter a note: </label>
+    <input id="inputValue" @bind="inputValue" />
+    <button @onclick="StoreNote">Store</button>
+</div>
+
+<div>
+    <button @onclick="RetrieveNotes">Retrieve Notes</button>
+    <ul>
+        @foreach (var note in notes)
+        {
+            <li>@note</li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Inject]
+    private ILocalStorageService LocalStorage { get; set; }
+
+    private string inputValue;
+    private List<string> notes = new List<string>();
+
+    private void StoreNote()
+    {
+        if (!string.IsNullOrWhiteSpace(inputValue))
+        {
+            string key = "notes_" + Guid.NewGuid().ToString();
+            LocalStorage.SetItemAsync(key, inputValue);
+            inputValue = string.Empty;
+        }
+    }
+
+    private async Task RetrieveNotes()
+    {
+        var keys = (await LocalStorage.KeysAsync()).Where(k => k.StartsWith("notes_")).ToList();
+        notes.Clear();
+
+        foreach (var key in keys)
+        {
+            string note = await LocalStorage.GetItemAsync<string>(key);
+            notes.Add(note);
+        }
+    }
+}

@@ -1,0 +1,38 @@
+﻿<Properties StartupConfiguration="{BA24EEC1-7284-42A7-A67E-5297DF9F8612}|https">
+  <MonoDevelop.Ide.Workbench ActiveDocument="LocalSave/Pages/LocalStore.razor.cs">
+    <Files>
+      <File FileName="LocalSave/Pages/LocalStore.razor" />
+      <File FileName="LocalSave/Shared/MainLayout.razor" />
+      <File FileName="LocalSave/Shared/NavMenu.razor" />
+      <File FileName="LocalSave/Program.cs" />
+      <File FileName="LocalSave/Data/Note.cs" />
+      <File FileName="LocalSave/Pages/LocalStore.razor.cs" Line="36" Column="18" />
+      <File FileName="LocalSave/Pages/Index.razor" />
+      <File FileName="LocalSave/Data/BaseEntity.cs" />
+      <File FileName="LocalSave/Pages/Counter.razor" />
+      <File FileName="LocalSave/Pages/LocalStore.razor.css" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="LocalSave" expanded="True">
+            <Node name="LocalSave" expanded="True">
+              <Node name="Pages" expanded="True">
+                <Node name="LocalStore.razor" expanded="True">
+                  <Node name="LocalStore.razor.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.LocalSave PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+</Properties>

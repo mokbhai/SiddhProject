@@ -1,0 +1,43 @@
+﻿<Properties StartupConfiguration="{89E5B7B5-E94A-4645-AC0B-C494BE7BF3FF}|https">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="TimeTable/Pages/FetchData.razor">
+    <Files>
+      <File FileName="TimeTable/Data/Entities/TaskEntity.cs" />
+      <File FileName="TimeTable/Data/Services/TaskService.cs" Line="17" Column="1" />
+      <File FileName="TimeTable/Data/Entities/BaseEntity.cs" Line="18" Column="2" />
+      <File FileName="TimeTable/Pages/Index.razor" Line="1" Column="1" />
+      <File FileName="TimeTable/DbContext/TimeTableDbContext.cs" Line="46" Column="1" />
+      <File FileName="TimeTable/Program.cs" Line="30" Column="20" />
+      <File FileName="TimeTable/Shared/MainLayout.razor.cs" Line="1" Column="1" />
+      <File FileName="TimeTable/Pages/FetchData.razor" Line="5" Column="11" />
+      <File FileName="TimeTable/Pages/Task.razor" Line="52" Column="1" />
+      <File FileName="TimeTable/Shared/MainLayout.razor" Line="3" Column="1" />
+      <File FileName="TimeTable/Shared/MainLayout.razor.css" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TimeTable">
+            <Node name="TimeTable">
+              <Node name="Data" expanded="True">
+                <Node name="Entities" expanded="True" />
+                <Node name="Services" expanded="True" />
+              </Node>
+              <Node name="DbContext" expanded="True" />
+              <Node name="Pages" expanded="True">
+                <Node name="FetchData.razor" selected="True" />
+              </Node>
+              <Node name="Shared" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.TimeTable PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+</Properties>

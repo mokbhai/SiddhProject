@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dgSpecHash": "iY+YAlAbD4LmI74jx4eYwS07lAI6Lhj2e9WnhW/jsyJYeq/sME2uKJrbCSNWZp7aJ4+8WxLimfOdpr1k/Vg5Yg==",
+  "success": true,
+  "projectFilePath": "/Users/mokshitjain/Projects/SiddhProject/Blazor/LocalSave/LocalSave/LocalSave.csproj",
+  "expectedPackageFiles": [
+    "/Users/mokshitjain/.nuget/packages/blazored.localstorage/4.4.0/blazored.localstorage.4.4.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.aspnetcore.authorization/7.0.0/microsoft.aspnetcore.authorization.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.aspnetcore.components/7.0.0/microsoft.aspnetcore.components.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.aspnetcore.components.analyzers/7.0.0/microsoft.aspnetcore.components.analyzers.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.aspnetcore.components.forms/7.0.0/microsoft.aspnetcore.components.forms.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.aspnetcore.components.web/7.0.0/microsoft.aspnetcore.components.web.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.aspnetcore.metadata/7.0.0/microsoft.aspnetcore.metadata.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.extensions.dependencyinjection/7.0.0/microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/7.0.0/microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.extensions.logging.abstractions/7.0.0/microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.extensions.options/7.0.0/microsoft.extensions.options.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.extensions.primitives/7.0.0/microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/microsoft.jsinterop/7.0.0/microsoft.jsinterop.7.0.0.nupkg.sha512",
+    "/Users/mokshitjain/.nuget/packages/system.io.pipelines/7.0.0/system.io.pipelines.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,49 @@
+﻿@inherits LayoutComponentBase
+
+
+<div class="page">
+    <div class="sidebar">
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a>Time: @currentTime, Date: @currentDate, Day: @Today</a>
+        </div>
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code
+{
+    string currentDate = DateTime.Now.Date.ToString("dd MMM yyyy");
+    string currentTime = DateTime.Now.ToString("hh:mm");
+    string Today = DateTime.Now.Date.ToString("ddd");
+
+    private Timer? timer;
+
+    protected override void OnInitialized()
+    {
+        // Create and start a timer to update the time every second
+        timer = new Timer(UpdateCurrentTime, null, 0, 1000);
+    }
+
+    private void UpdateCurrentTime(object state)
+    {
+        // Update the time and day
+        currentDate = DateTime.Now.ToString("dd MMM yyyy");
+        currentTime = DateTime.Now.ToString("hh:mm tt");
+        Today = DateTime.Now.ToString("ddd");
+
+        // Notify Blazor to re-render the component
+
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    public void Dispose()
+    {
+        // Dispose of the timer when the component is disposed
+        timer.Dispose();
+    }
+}

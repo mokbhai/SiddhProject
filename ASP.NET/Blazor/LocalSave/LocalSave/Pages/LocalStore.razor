@@ -1,0 +1,56 @@
+﻿@page "/local"
+
+@using Blazored.LocalStorage
+@using LocalSave.Data
+
+<h3>Local Storage Demo</h3>
+
+<div>
+    <label for="@inputValue">Enter a note: </label>
+    <input id="@inputValue" @bind="@inputValue" @onkeydown="StoreNoteOnEnter" />
+    <div>
+        <label for="@selectedImportance">Select an option: </label>
+        <select id="@selectedImportance" @onchange="OnImportanceChange">
+            @foreach (var enumValue in Enum.GetValues(typeof(ImportanceEnum)))
+            {
+                <option value="@enumValue">@enumValue</option>
+            }
+        </select>
+    </div>
+    <button @onclick="StoreNote">Store</button>
+</div>
+
+<div>
+    <button @onclick="RetrieveNotes">Retrieve Notes</button>
+    <button @onclick="DeleteAllNotes">Delete All Notes</button>
+
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>Task</th>
+                <th>Importance</th>
+                <th>CreatedBy</th>
+                <th>CreatedAt</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        @foreach (var note in notes)
+        {
+            <tbody>
+                <tr>
+                    <td>@(sNo++)</td>
+                    <td>@note.Text</td>
+                    <td>@note.Importance</td>
+                    <td>@note.CreatedBy</td>
+                    <td>@note.CreatedAtUtc</td>
+                    <td><button @onclick="() => DeleteNoteByKey(note.Id)">Delete</button></td>
+                </tr>
+            </tbody>
+        }
+    </table>
+</div>
+@code
+{
+    int sNo = 1;
+}
