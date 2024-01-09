@@ -1,0 +1,31 @@
+﻿<Properties StartupConfiguration="{96A995D9-1FC9-40E8-8EA0-D9F1EDB1E8C8}|https">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="DapperCRUD/appsettings.json">
+    <Files>
+      <File FileName="DapperCRUD/Controllers/AccountController.cs" Line="1" Column="1" />
+      <File FileName="DapperCRUD/Controllers/WeatherForecastController.cs" Line="1" Column="1" />
+      <File FileName="DapperCRUD/Properties/launchSettings.json" Line="1" Column="1" />
+      <File FileName="DapperCRUD/Program.cs" Line="1" Column="1" />
+      <File FileName="DapperCRUD/appsettings.json" Line="12" Column="2" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DapperCRUD">
+            <Node name="DapperCRUD" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Properties" expanded="True" />
+              <Node name="appsettings.json" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.DapperCRUD PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
