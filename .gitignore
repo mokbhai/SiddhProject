@@ -3,6 +3,8 @@
 **/bin/
 **/obj/
 **/node_modules/
+**/.vscode/*
+
 
 **cache
 **idea
