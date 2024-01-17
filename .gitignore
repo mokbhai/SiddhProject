@@ -1,0 +1,15 @@
+**/.idea/
+**/.vs/
+**/bin/
+**/obj/
+**/node_modules/
+
+**cache
+**idea
+**vs
+**bin
+**obj
+**.DS_Store
+
+
+**env
