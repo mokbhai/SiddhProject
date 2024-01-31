@@ -1,31 +1,31 @@
-import React from "react";
 import { Heading, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
 
 const Card = ({ title, description, imageSrc }) => {
   return (
     <VStack
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      p={4}
-      boxShadow="lg"
-      width="300px"
-      bg="white"
       color="black"
+      backgroundColor="white"
+      cursor="pointer"
+      borderRadius="xl"
     >
-      <Image src={imageSrc} alt={title} />
-      <VStack alignItems="flex-start" spacing={2}>
-        <Heading as="h3" size="md" color="black">
-          {/* Set Heading color to black */}
-          {title}
-        </Heading>
-        <Text color="black">{description}</Text> {/* Set Text color to black */}
+      <Image borderRadius="xl" src={imageSrc} alt={title} />
+      <VStack spacing={4} p={4} alignItems="flex-start">
+        <HStack justifyContent="space-between" alignItems="center">
+          <Heading as="h3" size="md">
+            {title}
+          </Heading>
+        </HStack>
+        <Text color="#64748b" fontSize="lg">
+          {description}
+        </Text>
+        <HStack spacing={2} alignItems="center">
+          <p>See more</p>
+          <FontAwesomeIcon icon={faArrowRight} size="1x" />
+        </HStack>
       </VStack>
-      <HStack justify="flex-end" mt={4}>
-        <FontAwesomeIcon icon={faArrowRight} size="1x" />
-      </HStack>
     </VStack>
   );
 };

@@ -52,6 +52,7 @@ const ProjectsSection = () => {
             key={project.title}
             title={project.title}
             description={project.description}
+            url="https://github.com/rgommezz/react-native-offline"
             imageSrc={project.getImageSrc()}
           />
         ))}
