@@ -1,5 +1,0 @@
-# CALCULATOR APP
-
-#### Video Demo: https://youtu.be/WZGk1OyKzQc
-
-#### Description: THIS APP ALLOES USERS TO CALCULATE BASIC OPERATIONS OF MATHS.
