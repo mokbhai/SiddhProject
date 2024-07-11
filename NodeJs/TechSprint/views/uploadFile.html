@@ -1,0 +1,201 @@
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      width: 50%;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .form-container form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-container form input[type="text"],
+    .form-container form input[type="file"] {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .form-container form input[type="submit"] {
+      margin: 20px 0;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .form-container form input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    .preview-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 50px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .preview-container img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="preview-container">
+        <img id="preview" />
+      </div>
+      <div class="form-container">
+        <h2>Image Upload</h2>
+
+        <form
+          id="uploadForm"
+          action="/upload"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <select name="menu">
+            <option value="gallery">Gallery</option>
+            <option value="aboutus">AboutUs</option>
+          </select>
+          
+          Enter token:
+          <input type="text" id="token" name="token" />
+          Select image to upload:
+          <input
+            type="file"
+            name="upload"
+            id="upload"
+            onchange="previewImage()"
+          />
+          Length:
+          <input
+            type="text"
+            id="length"
+            name="length"
+            onchange="previewImage()"
+          />
+          Width: (max 680)
+          <input
+            type="text"
+            id="width"
+            name="width"
+            onchange="previewImage()"
+          />
+
+          <input type="submit" value="Upload Image" name="submit" />
+        </form>
+
+        <button onclick="document.getElementById('upload').click()">
+          Add New Image
+        </button>
+      </div>
+    </div>
+    <script>
+      function previewImage() {
+        var fileInput = document.getElementById("upload");
+        var file = fileInput.files[0];
+        var length = document.getElementById("length").value;
+        var width = document.getElementById("width").value;
+        var preview = document.getElementById("preview");
+        if (file) {
+          var reader = new FileReader();
+
+          reader.addEventListener("load", function () {
+            preview.src = this.result;
+            if (length) preview.style.height = length + "px";
+            if (width) preview.style.width = width + "px";
+          });
+
+          reader.readAsDataURL(file);
+        }
+      }
+      
+
+      function upload(id, token) {
+          var dropdownValue = document.querySelector('select[name="menu"]').value;
+          let endpoint;
+
+          if (dropdownValue === 'gallery') 
+            endpoint =  'http://localhost:4000/api/gallery/create' 
+          else if (dropdownValue === 'aboutus') 
+            endpoint = 'http://localhost:4000/api/aboutUs/create';
+
+          fetch(endpoint, {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify({
+              photos: [id],
+            }),
+          }).catch((err)=> console.log(err))
+      }
+
+      // Prevent the form from submitting normally
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Get the file from the file input field
+          var fileInput = document.getElementById("upload");
+          var file = fileInput.files[0];
+          var length = document.getElementById("length").value;
+          var width = document.getElementById("width").value;
+
+          // Get the token from the token input field
+          var token = document.getElementById("token").value;
+
+          var formData = new FormData();
+          formData.append("upload", file);
+          formData.append("length", length);
+          formData.append("width", width);
+
+          // Use the Fetch API to make the request
+          fetch("http://localhost:4000/api/file/upload", {
+            method: "POST",
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              upload(data.fileId, token);
+            })
+            .catch((error) => console.error(error));
+        });
+    </script>
+  </body>
+</html>
+  
