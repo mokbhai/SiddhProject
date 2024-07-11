@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2577d909.css",
+    "main.js": "/static/js/main.1cdb7423.js",
+    "static/media/marker-icon.png": "/static/media/marker-icon.dfc0fcd600d25fa6dec0.png",
+    "index.html": "/index.html",
+    "main.2577d909.css.map": "/static/css/main.2577d909.css.map",
+    "main.1cdb7423.js.map": "/static/js/main.1cdb7423.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2577d909.css",
+    "static/js/main.1cdb7423.js"
+  ]
+}
