@@ -6,8 +6,6 @@ import fs from "fs";
 import STATUSCODE from "../Enums/HttpStatusCodes.js";
 import { sendError } from "./ErrorHandler.js";
 import redisClient from "../config/redis.js";
-import pkg from "image-to-webp";
-const { imageToWebp } = pkg;
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -52,27 +50,26 @@ export const uploadFile = async (req, res, next) => {
     fileData.uplodedBy = userId;
 
     // If the file is an image
-    if (mimetype.startsWith("image/")) {
-      const image = path;
-      console.log(image);
+    // if (mimetype.startsWith("image/")) {
+    // const image = path;
 
-      const webpImage = await imageToWebp(image, 40);
-      console.log(webpImage);
+    // const webpImage = await imageToWebp(image, 40);
+    // console.log(webpImage);
 
-      fs.copyFileSync(webpImage, image + ".webp");
-      fs.unlinkSync(image);
+    // fs.copyFileSync(webpImage, image + ".webp");
+    // fs.unlinkSync(image);
 
-      fileData.name = filename + ".webp";
-      fileData.type = "image/webp";
-      fileData.file = path + ".webp";
+    // fileData.name = filename + ".webp";
+    // fileData.type = "image/webp";
+    // fileData.file = path + ".webp";
 
-      if (length) {
-        fileData.length = length;
-      }
-      if (width) {
-        fileData.width = width;
-      }
-    }
+    //   if (length) {
+    //     fileData.length = length;
+    //   }
+    //   if (width) {
+    //     fileData.width = width;
+    //   }
+    // }
 
     await fileData
       .save()
