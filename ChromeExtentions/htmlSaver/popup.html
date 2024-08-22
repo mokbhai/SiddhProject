@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Content Copier</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+      input {
+        width: 100%;
+        padding: 5px;
+        margin-top: 5px;
+      }
+      button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <label for="iterations">Number of Iterations:</label>
+    <input type="number" id="iterations" value="50" />
+
+    <label for="speed">Speed (ms):</label>
+    <input type="number" id="speed" value="2000" />
+
+    <label for="contentClass">Div Content Class:</label>
+    <input type="text" id="contentClass" value="post-content" />
+
+    <label for="nextButtonClass">Next Button Class:</label>
+    <input type="text" id="nextButtonClass" value="next" />
+
+    <button id="start">Start Copying</button>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input Fields</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      form {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+      }
+      input[type="text"],
+      input[type="range"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        display: block; /* Ensure each input starts on a new line */
+      }
+      input[type="range"] {
+        margin-bottom: 0;
+      }
+      output {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: center;
+      }
+      button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="inputForm">
+      <input
+        type="text"
+        id="divClass"
+        name="divClass"
+        placeholder="Div Class"
+      />
+      <input type="text" id="divId" name="divId" placeholder="Div ID" />
+      <input
+        type="text"
+        id="nextClass"
+        name="nextClass"
+        placeholder="Next Class"
+      />
+      <input type="text" id="nextId" name="nextId" placeholder="Next ID" />
+      <label for="timer">Delay (in seconds):</label>
+      <input
+        type="range"
+        id="timer"
+        name="timer"
+        min="0"
+        max="100"
+        value="10"
+      />
+      <output id="timerOutput">10 seconds</output>
+
+      <label for="itr">Number of Iterations:</label>
+      <input type="range" id="itr" name="itr" min="1" max="100" value="20" />
+      <output id="itrOutput">20</output>
+
+      <button type="button" id="startButton">Start</button>
+    </form>
+
+    <script src="index.js"></script>
+  </body>
+</html>

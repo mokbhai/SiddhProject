@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Content Copier",
+  "version": "1.0",
+  "description": "Copies data from div class 'post-content' and navigates through pages.",
+  "permissions": ["activeTab", "scripting", "downloads", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon_16.png",
+      "48": "icon_16.png",
+      "128": "icon_128.png"
+    }
+  },
+  "content_scripts": []
+}
