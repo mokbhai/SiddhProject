@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Web Data Extractor",
+  "version": "1.0",
+  "description": "Extracts data from web pages.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "downloads",
+    "webNavigation",
+    "tabs"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.1116.org/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
