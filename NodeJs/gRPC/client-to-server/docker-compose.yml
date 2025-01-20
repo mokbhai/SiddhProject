@@ -1,0 +1,43 @@
+version: "3"
+services:
+  server:
+    build:
+      context: .
+      dockerfile: docker/server/Dockerfile
+    ports:
+      - "50051:50051"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    networks:
+      - grpc-network
+
+  envoy:
+    build:
+      context: .
+      dockerfile: docker/envoy/Dockerfile
+    ports:
+      - "8080:8080"
+      - "9901:9901"
+    depends_on:
+      - server
+    networks:
+      - grpc-network
+
+  client:
+    build:
+      context: .
+      dockerfile: docker/client/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - server
+    networks:
+      - grpc-network
+
+networks:
+  grpc-network:
+    driver: bridge
