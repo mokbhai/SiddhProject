@@ -1,4 +1,4 @@
-i want to Learn how to use gRPC with nodejs and react js
+# Learn how to use gRPC with nodejs and react js
 
 This should demonstrate a basic gRPC service that:
 
