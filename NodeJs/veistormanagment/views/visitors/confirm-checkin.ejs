@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Confirm Check-in - Visitor Management System</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <%- include('../partials/navbar') %>
+
+      <h2>Confirm Visitor Check-in</h2>
+      <%- include('../partials/messages') %>
+
+      <div class="visitor-details">
+        <h3>Visitor Information</h3>
+        <p><strong>Name:</strong> <%= visitor.fullName %></p>
+        <p><strong>Email:</strong> <%= visitor.email %></p>
+        <p><strong>Company:</strong> <%= visitor.company %></p>
+        <p><strong>Purpose:</strong> <%= visitor.purpose %></p>
+        <p>
+          <strong>Host:</strong> <%= visitor.hostEmployee.name %> (<%=
+          visitor.hostEmployee.department %>)
+        </p>
+        <p>
+          <strong>Visit Date:</strong> <%= visitor.visitDate.toLocaleString() %>
+        </p>
+
+        <div class="visitor-photo">
+          <img
+            src="/uploads/visitors/<%= visitor.photo %>"
+            alt="Visitor Photo"
+          />
+        </div>
+
+        <form action="/visitors/checkin/<%= visitor._id %>" method="POST">
+          <button type="submit" class="btn btn-primary">
+            Confirm Check-in
+          </button>
+          <a href="/visitors" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

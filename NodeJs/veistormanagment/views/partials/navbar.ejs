@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a href="/">Visitor Management System</a>
+  </div>
+  <div class="navbar-menu">
+    <% if (locals.user) { %>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/visitors">Visitors</a>
+    <% if (user.role === 'admin') { %>
+    <a href="/users">Users</a>
+    <% } %> <% if (user.role === 'security') { %>
+    <a href="/visitors/scan">Scan QR Code</a>
+    <% } %>
+    <a href="/auth/logout">Logout</a>
+    <% } else { %>
+    <a href="/auth/login">Login</a>
+    <a href="/auth/register">Register</a>
+    <% } %>
+  </div>
+</nav>

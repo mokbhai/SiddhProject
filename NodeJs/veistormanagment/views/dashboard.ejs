@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Visitor Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <%- include('./partials/navbar') %>
+        
+        <h1>Welcome <%= user.name %></h1>
+        <%- include('./partials/messages') %>
+
+        <div class="dashboard-grid">
+            <% if (user.role === 'admin' || user.role === 'security') { %>
+                <div class="dashboard-card">
+                    <h3>Today's Visitors</h3>
+                    <a href="/visitors" class="btn btn-primary">View Visitors</a>
+                </div>
+            <% } %>
+
+            <% if (user.role === 'employee') { %>
+                <div class="dashboard-card">
+                    <h3>My Visitors</h3>
+                    <a href="/visitors" class="btn btn-primary">View My Visitors</a>
+                </div>
+            <% } %>
+
+            <div class="dashboard-card">
+                <h3>Register New Visitor</h3>
+                <a href="/visitors/register" class="btn btn-primary">Register Visitor</a>
+            </div>
+
+            <% if (user.role === 'admin') { %>
+                <div class="dashboard-card">
+                    <h3>Manage Users</h3>
+                    <a href="/users" class="btn btn-primary">View Users</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html> 

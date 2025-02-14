@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scan QR Code - Visitor Management System</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://unpkg.com/html5-qrcode"></script>
+  </head>
+  <body>
+    <div class="container">
+      <%- include('../partials/navbar') %>
+
+      <h2>Scan Visitor QR Code</h2>
+      <%- include('../partials/messages') %>
+
+      <div class="scanner-container">
+        <div id="reader"></div>
+        <div id="result"></div>
+      </div>
+
+      <script>
+        function onScanSuccess(decodedText, decodedResult) {
+          try {
+            const visitorData = JSON.parse(decodedText);
+            // Send the data to the server
+            fetch("/visitors/verify-qr", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(visitorData),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  // Redirect to check-in confirmation page
+                  window.location.href = `/visitors/confirm-checkin/${data.visitorId}`;
+                } else {
+                  document.getElementById(
+                    "result"
+                  ).innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                document.getElementById("result").innerHTML =
+                  '<div class="alert alert-danger">Error processing QR code</div>';
+              });
+          } catch (error) {
+            console.error("Error parsing QR code:", error);
+            document.getElementById("result").innerHTML =
+              '<div class="alert alert-danger">Invalid QR code</div>';
+          }
+        }
+
+        function onScanFailure(error) {
+          // console.warn(`QR error = ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+          "reader",
+          { fps: 10, qrbox: { width: 250, height: 250 } },
+          /* verbose= */ false
+        );
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+      </script>
+    </div>
+  </body>
+</html>

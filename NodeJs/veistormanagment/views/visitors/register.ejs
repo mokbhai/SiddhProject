@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Visitor - Visitor Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Register New Visitor</h2>
+        <%- include('../partials/messages') %>
+        
+        <form action="/visitors/register" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="company">Company</label>
+                <input type="text" id="company" name="company">
+            </div>
+            
+            <div class="form-group">
+                <label for="purpose">Purpose of Visit</label>
+                <textarea id="purpose" name="purpose" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="hostEmployee">Host Employee</label>
+                <select id="hostEmployee" name="hostEmployee" required>
+                    <option value="">Select Host Employee</option>
+                    <% employees.forEach(employee => { %>
+                        <option value="<%= employee._id %>">
+                            <%= employee.name %> - <%= employee.department %>
+                        </option>
+                    <% }) %>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="visitDate">Visit Date</label>
+                <input type="datetime-local" id="visitDate" name="visitDate" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="photo">Photo</label>
+                <input type="file" id="photo" name="photo" accept="image/*" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Register Visitor</button>
+        </form>
+    </div>
+</body>
+</html> 

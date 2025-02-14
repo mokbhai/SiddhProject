@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Visitors - Visitor Management System</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <%- include('../partials/navbar') %>
+
+      <h2>Visitors List</h2>
+      <%- include('../partials/messages') %>
+
+      <div class="action-buttons">
+        <a href="/visitors/register" class="btn btn-primary"
+          >Register New Visitor</a
+        >
+        <% if (user.role === 'security') { %>
+        <a href="/visitors/scan" class="btn btn-success">Scan QR Code</a>
+        <% } %>
+      </div>
+
+      <table class="visitors-table">
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Host</th>
+            <th>Purpose</th>
+            <th>Visit Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% visitors.forEach(visitor => { %>
+          <tr>
+            <td>
+              <img
+                src="/uploads/visitors/<%= visitor.photo %>"
+                alt="Visitor"
+                width="50"
+              />
+            </td>
+            <td><%= visitor.fullName %></td>
+            <td><%= visitor.hostEmployee.name %></td>
+            <td><%= visitor.purpose %></td>
+            <td><%= visitor.visitDate.toLocaleString() %></td>
+            <td><%= visitor.status %></td>
+            <td>
+              <% if (visitor.status === 'pending' && (user.role === 'admin' ||
+              user.role === 'employee')) { %>
+              <form
+                action="/visitors/approve/<%= visitor._id %>"
+                method="POST"
+                style="display: inline"
+              >
+                <button type="submit" class="btn btn-success">Approve</button>
+              </form>
+              <% } %> <% if (visitor.status === 'approved' && user.role ===
+              'security') { %>
+              <form
+                action="/visitors/checkin/<%= visitor._id %>"
+                method="POST"
+                style="display: inline"
+              >
+                <button type="submit" class="btn btn-primary">Check In</button>
+              </form>
+              <% } %> <% if (visitor.status === 'checked-in' && user.role ===
+              'security') { %>
+              <form
+                action="/visitors/checkout/<%= visitor._id %>"
+                method="POST"
+                style="display: inline"
+              >
+                <button type="submit" class="btn btn-warning">Check Out</button>
+              </form>
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

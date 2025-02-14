@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome - Visitor Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to Visitor Management System</h1>
+            <p>Manage your visitors efficiently and securely</p>
+        </header>
+
+        <main>
+            <div class="auth-buttons">
+                <% if (!locals.user) { %>
+                    <a href="/auth/login" class="btn btn-primary">Login</a>
+                    <a href="/auth/register" class="btn btn-secondary">Register</a>
+                <% } else { %>
+                    <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+                <% } %>
+            </div>
+
+            <section class="features">
+                <h2>Key Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Visitor Registration</h3>
+                        <p>Easy and quick visitor registration process</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>QR Code Generation</h3>
+                        <p>Secure QR codes for visitor identification</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Email Notifications</h3>
+                        <p>Instant notifications for hosts and visitors</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Check-in/Check-out</h3>
+                        <p>Streamlined visitor tracking system</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html> 

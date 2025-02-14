@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit User - Visitor Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <%- include('../partials/navbar') %>
+        
+        <h2>Edit User</h2>
+        <%- include('../partials/messages') %>
+        
+        <form action="/users/edit/<%= user._id %>" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" value="<%= user.name %>" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="<%= user.email %>" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" name="role" required>
+                    <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+                    <option value="employee" <%= user.role === 'employee' ? 'selected' : '' %>>Employee</option>
+                    <option value="security" <%= user.role === 'security' ? 'selected' : '' %>>Security</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="department">Department</label>
+                <input type="text" id="department" name="department" value="<%= user.department %>" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Update User</button>
+            <a href="/users" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html> 
