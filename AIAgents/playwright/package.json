@@ -23,15 +23,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@langchain/community": "^0.3.55",
-    "@langchain/core": "^0.3.75",
-    "@langchain/langgraph": "^0.4.9",
+    "@langchain/community": "",
+    "@langchain/core": "",
+    "@langchain/google-genai": "^0.2.18",
+    "@langchain/langgraph": "",
     "@langchain/mcp-adapters": "^0.6.0",
-    "@langchain/openai": "^0.6.11",
-    "@modelcontextprotocol/sdk": "^1.17.5",
+    "@langchain/openai": "",
+    "@modelcontextprotocol/sdk": "",
+    "@playwright/mcp": "^0.0.41",
     "@types/node": "^24.3.1",
-    "dotenv": "^17.2.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "dotenv": "",
+    "ts-node": "",
+    "typescript": ""
   }
 }
