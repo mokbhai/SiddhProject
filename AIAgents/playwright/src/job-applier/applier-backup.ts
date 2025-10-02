@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { AzureOpenAI, ChatOpenAI } from "@langchain/openai";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { StateGraph, Annotation, START, END } from "@langchain/langgraph";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
@@ -7,7 +7,7 @@ import {
   AIMessage,
   type BaseMessage,
 } from "@langchain/core/messages";
-import { config, getGeminiApiKey, getOpenAIApiKey } from "../utils/config";
+import { config, getLLMApiKey } from "../utils/config";
 import { detailedResume } from "./detailedResume";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { MultiServerMCPClient } from "@langchain/mcp-adapters";
@@ -61,6 +61,8 @@ const JobApplicationState = Annotation.Root({
   }),
 });
 
+type chatModels = ChatOpenAI | ChatGoogleGenerativeAI;
+
 type JobApplicationStateType = typeof JobApplicationState.State;
 
 /**
@@ -108,6 +110,41 @@ async function handleToolCalls(
   return currentMessage;
 }
 
+function configModel(): chatModels {
+  let model: chatModels;
+  if (config.llm.provider === "google") {
+    // Initialize the ChatGeminiAI model
+    model = new ChatGoogleGenerativeAI({
+      model: config.llm.model,
+      temperature: config.llm.temperature,
+      apiKey: getLLMApiKey(),
+    });
+    console.log("✅ ChatGeminiAI model initialized");
+  } else if (
+    config.llm.provider === "openai" ||
+    config.llm.provider === "azure" ||
+    config.llm.provider === "openrouter"
+  ) {
+    // Initialize the ChatOpenAI model
+    model = new ChatOpenAI({
+      modelName: config.llm.model,
+      temperature: config.llm.temperature,
+      configuration: {
+        baseURL: config.llm.baseUrl,
+        defaultHeaders: {
+          "HTTP-Referer": "https://localhost:3000",
+          "X-Title": "localhost (AI Job Applier)",
+        },
+      },
+      apiKey: getLLMApiKey(),
+    });
+    console.log("✅ ChatOpenAI model initialized");
+  } else {
+    throw new Error(`Unsupported LLM provider: ${config.llm.provider}`);
+  }
+  return model;
+}
+
 async function jobApplicationWorkflow() {
   console.log("🚀 Starting Job Application Automation Workflow\n");
 
@@ -120,25 +157,7 @@ async function jobApplicationWorkflow() {
   });
 
   try {
-    let model: ChatOpenAI | ChatGoogleGenerativeAI;
-
-    if (config.gemini.apiKey) {
-      // Initialize the ChatGeminiAI model
-      model = new ChatGoogleGenerativeAI({
-        model: config.gemini.model,
-        temperature: config.gemini.temperature,
-        apiKey: getGeminiApiKey(),
-      });
-      console.log("✅ ChatGeminiAI model initialized");
-    } else {
-      // Initialize the ChatOpenAI model
-      model = new ChatOpenAI({
-        modelName: config.openai.model,
-        temperature: config.openai.temperature,
-        apiKey: getOpenAIApiKey(),
-      });
-      console.log("✅ ChatOpenAI model initialized");
-    }
+    let model: chatModels = configModel();
 
     console.log("🎯 Playwright MCP configuration:", config.mcp.playwright);
 
@@ -405,18 +424,12 @@ async function jobApplicationWorkflow() {
           6. Click buttons and links (including Next/Continue buttons)
           7. Take screenshots for verification
           
-          CRITICAL MULTI-PAGE FORM HANDLING:
-          - Many forms (especially Google Forms) have multiple pages
-          - After filling current page, look for "Next", "Continue", or similar navigation buttons
-          - Click navigation buttons to proceed to next page
-          - Repeat the process for each page until you reach the final page
-          - Take screenshots at each page for verification
-          
-          CRITICAL SAFETY RULES:
-          - This is DRAFT-ONLY filling - DO NOT submit the application
-          - Do NOT click submit buttons ("Submit", "Apply", "Send Application", etc.)
-          - Only fill form fields with the provided information
-          - Navigate through all pages but stop before final submission
+          CRITICAL FILE UPLOAD HANDLING:
+          - Look for file upload fields (input[type="file"], "Add File" buttons, drag-drop areas)
+          - Primary option: Use the resume file path: {resumeFilePath}
+          - Alternative option: Resume URL available at: {resumeUrl}
+          - Backup file reference: {resumePdf}
+          - Handle different upload patterns:
           
           Job Context:
           - Job Analysis: {jobAnalysis}
@@ -432,6 +445,8 @@ async function jobApplicationWorkflow() {
           - Experience: {experience}
           - Skills: {skills}
           - Resume File Path: {resumeFilePath}
+          - Resume URL: {resumeUrl}
+          - Resume PDF: {resumePdf}
           
           Additional Application Fields:
           - Current Location: {currentLocation}
@@ -455,6 +470,8 @@ async function jobApplicationWorkflow() {
           6. If found, click to go to next page and repeat from step 2
           7. Continue until all pages are filled (but don't submit)
           8. Take final screenshot showing the completed form
+          9. IMPORTANT: Keep the browser open - do not close browser windows
+          10. End execution while leaving browser session active for user review
           
           FORM FIELD MAPPING STRATEGY:
           - Personal Info: Use name, email, phone from resume
@@ -474,6 +491,7 @@ async function jobApplicationWorkflow() {
           CRITICAL FILE UPLOAD HANDLING:
           - Look for file upload fields (input[type="file"], "Add File" buttons, drag-drop areas)
           - Use the resume file path: {resumeFilePath}
+          - Alternative: Resume URL available at: {resumeUrl}
           - Handle different upload patterns:
             * Google Forms: Click "Add File" button, then select the resume file
             * Direct file input: Use setInputFiles() with the file path
@@ -496,7 +514,18 @@ async function jobApplicationWorkflow() {
           5. Verify file appears in the form
           6. Take screenshot to confirm
           
-          Remember: Navigate through ALL pages but DO NOT SUBMIT!`,
+          Remember: Navigate through ALL pages but DO NOT SUBMIT!
+          
+          CRITICAL BROWSER PERSISTENCE RULES:
+          - NEVER call browser.close() or page.close()
+          - NEVER use any commands that close browser windows
+          - DO NOT navigate away from the completed form
+          - Keep all browser tabs and windows open
+          - After completing the form filling, KEEP THE BROWSER OPEN
+          - Do NOT close any browser windows or tabs
+          - Take a final screenshot showing the completed form
+          - End with a message that the browser is ready for manual review
+          - The browser session must remain active for user review`,
         ],
         [
           "human",
@@ -512,15 +541,22 @@ async function jobApplicationWorkflow() {
           
           IMPORTANT: Pay special attention to CV/Resume upload fields and ensure the resume file is actually uploaded.
           
+          CRITICAL: After completing the form filling, KEEP THE BROWSER OPEN for manual review and submission.
+          
           Job Description Source: {jobSource}
           
-          Remember: Fill ALL pages INCLUDING file uploads but DO NOT SUBMIT - leave as draft!`,
+          Remember: Fill ALL pages INCLUDING file uploads but DO NOT SUBMIT - leave as draft and KEEP BROWSER OPEN!`,
         ],
       ]);
 
       try {
         // Get the absolute path to the resume file
-        const resumeFilePath = path.resolve(__dirname, "./resume.pdf");
+        const resumeFilePath = path.resolve(
+          __dirname,
+          detailedResume.personalInfo.resumePdf
+        );
+        const resumeUrl = detailedResume.personalInfo.resumeUrl;
+        const resumePdf = detailedResume.personalInfo.resumePdf;
 
         // Use the model with tools to get the initial response
         const chain = analyzeAndFillPrompt.pipe(modelWithTools);
@@ -529,6 +565,8 @@ async function jobApplicationWorkflow() {
           jobAnalysis: state.jobAnalysis || "No job analysis available",
           jobSource: state.jobDescriptionSource || "none",
           resumeFilePath: resumeFilePath,
+          resumeUrl: resumeUrl,
+          resumePdf: resumePdf,
           name: resume.personalInfo.name,
           email: resume.personalInfo.email,
           phone: resume.personalInfo.phone,
@@ -644,7 +682,7 @@ async function jobApplicationWorkflow() {
     return { app, mcpClient };
   } catch (error) {
     console.error("❌ Error in Job Application workflow:", error);
-    await mcpClient.close();
+    // await mcpClient.close();
     throw error;
   }
 }
@@ -679,9 +717,14 @@ async function runJobApplication(
       currentStep: "start",
     });
 
-    // Clean up MCP client
-    // await mcpClient.close();
-    console.log("✅ MCP client closed successfully");
+    // CRITICAL: Never close MCP client to keep browser session alive
+    // mcpClient.close() is NEVER called to maintain browser persistence
+    console.log(
+      "✅ MCP workflow completed - browser session maintained for manual review"
+    );
+    console.log(
+      "🔴 IMPORTANT: MCP client kept alive to prevent browser closure"
+    );
 
     console.log("\n📊 Application Process Summary:");
     console.log("=====================================");
@@ -704,10 +747,42 @@ async function runJobApplication(
 
     console.log("\n⚠️  IMPORTANT REMINDERS:");
     console.log("1. This tool filled the form as a DRAFT only");
-    console.log("2. Please review all filled information");
-    console.log("3. Upload resume.pdf manually if needed");
-    console.log("4. Submit the application manually after review");
+    console.log("2. Browser is kept OPEN for your review");
+    console.log("3. Please review all filled information in the browser");
+    console.log("4. Upload resume.pdf manually if needed");
+    console.log("5. Submit the application manually after review");
+    console.log("6. Close the browser manually when done");
+    console.log(
+      "\n🌐 Browser Session: ACTIVE - Check your browser for the filled form"
+    );
 
+    // Keep the process alive to maintain browser session
+    console.log("\n🔄 Keeping process alive to maintain browser session...");
+    console.log(
+      "💡 Press Ctrl+C to exit and close browser when done reviewing"
+    );
+
+    // Set up a keep-alive mechanism
+    const keepAlive = setInterval(() => {
+      // This interval keeps the Node.js process alive
+      // which prevents the MCP server from shutting down
+    }, 30000); // Check every 30 seconds
+
+    // Clean up on process termination
+    // process.on("SIGINT", () => {
+    //   console.log("\n\n🛑 Shutting down...");
+    //   clearInterval(keepAlive);
+    //   if (mcpClient) {
+    //     mcpClient.close().then(() => {
+    //       console.log("✅ MCP client closed");
+    //       process.exit(0);
+    //     });
+    //   } else {
+    //     process.exit(0);
+    //   }
+    // });
+
+    // Return result but don't exit the function
     return result;
   } catch (error) {
     console.error("❌ Job application automation failed:", error);
@@ -719,7 +794,7 @@ async function runJobApplication(
 if (require.main === module) {
   // Example usage
   const exampleUrl =
-    "https://forms.microsoft.com/pages/responsepage.aspx?id=v4j5cvGGr0GRqy180BHbR5_U2QTabLtJhvoyBWLCzylUMVMwSkc0MEZZSTBNQ0VBWEVUSFlNWlVEWS4u&route=shorturl";
+    "https://apply.workable.com/groundtruth/j/FFCB55146B/apply";
 
   // Example with job description
   const exampleJD = `

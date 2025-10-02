@@ -5,16 +5,13 @@ import { tr } from "zod/v4/locales";
 dotenv.config();
 
 export const config = {
-  openai: {
-    apiKey: process.env.OPENAI_API_KEY || "",
-    baseUrl: process.env.OPENAI_API_BASE_URL || "https://api.openai.com/v1",
-    model: process.env.OPENAI_API_MODEL || "gpt-4.1-mini",
+  llm: {
+    apiKey: process.env.LLM_API_KEY || "",
+    baseUrl: process.env.LLM_API_BASE_URL || "https://api.llm.ai/v1",
+    model: process.env.LLM_API_MODEL || "llama3",
+    provider: process.env.LLM_API_PROVIDER || "openai", // openai, azure, anthropic, google, openrouter
     temperature: 0,
-  },
-  gemini: {
-    apiKey: process.env.GOOGLE_API_KEY || "",
-    model: process.env.GOOGLE_MODEL || "gemini-2.0-flash",
-    temperature: 0,
+    ...JSON.parse(process.env.LLM_API_EXTRA_OPTIONS || "{}"),
   },
   mcp: {
     serverUrl: process.env.MCP_SERVER_URL || "http://localhost:3000",
@@ -39,8 +36,8 @@ export const config = {
 export function validateConfig() {
   const missing = [];
 
-  if (!config.openai.apiKey) {
-    missing.push("OPENAI_API_KEY");
+  if (!config.llm.apiKey) {
+    missing.push("LLM_API_KEY");
   }
 
   if (missing.length > 0) {
@@ -50,16 +47,9 @@ export function validateConfig() {
   }
 }
 
-export function getOpenAIApiKey(): string {
-  if (!config.openai.apiKey) {
-    throw new Error("OPENAI_API_KEY is not set in environment variables");
+export function getLLMApiKey(): string {
+  if (!config.llm.apiKey) {
+    throw new Error("LLM_API_KEY is not set in environment variables");
   }
-  return config.openai.apiKey;
+  return config.llm.apiKey;
 }
-
-export const getGeminiApiKey = (): string => {
-  if (!config.gemini.apiKey) {
-    throw new Error("GOOGLE_API_KEY is not set in environment variables");
-  }
-  return config.gemini.apiKey;
-};

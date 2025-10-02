@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { AzureOpenAI, ChatOpenAI } from "@langchain/openai";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { StateGraph, Annotation, START, END } from "@langchain/langgraph";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
@@ -7,7 +7,7 @@ import {
   AIMessage,
   type BaseMessage,
 } from "@langchain/core/messages";
-import { config, getGeminiApiKey, getOpenAIApiKey } from "../utils/config";
+import { config, getLLMApiKey } from "../utils/config";
 import { detailedResume } from "./detailedResume";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { MultiServerMCPClient } from "@langchain/mcp-adapters";
@@ -61,6 +61,8 @@ const JobApplicationState = Annotation.Root({
   }),
 });
 
+type chatModels = ChatOpenAI | ChatGoogleGenerativeAI;
+
 type JobApplicationStateType = typeof JobApplicationState.State;
 
 /**
@@ -108,6 +110,41 @@ async function handleToolCalls(
   return currentMessage;
 }
 
+function configModel(): chatModels {
+  let model: chatModels;
+  if (config.llm.provider === "google") {
+    // Initialize the ChatGeminiAI model
+    model = new ChatGoogleGenerativeAI({
+      model: config.llm.model,
+      temperature: config.llm.temperature,
+      apiKey: getLLMApiKey(),
+    });
+    console.log("✅ ChatGeminiAI model initialized");
+  } else if (
+    config.llm.provider === "openai" ||
+    config.llm.provider === "azure" ||
+    config.llm.provider === "openrouter"
+  ) {
+    // Initialize the ChatOpenAI model
+    model = new ChatOpenAI({
+      modelName: config.llm.model,
+      temperature: config.llm.temperature,
+      configuration: {
+        baseURL: config.llm.baseUrl,
+        defaultHeaders: {
+          "HTTP-Referer": "https://localhost:3000",
+          "X-Title": "localhost (AI Job Applier)",
+        },
+      },
+      apiKey: getLLMApiKey(),
+    });
+    console.log("✅ ChatOpenAI model initialized");
+  } else {
+    throw new Error(`Unsupported LLM provider: ${config.llm.provider}`);
+  }
+  return model;
+}
+
 async function jobApplicationWorkflow() {
   console.log("🚀 Starting Job Application Automation Workflow\n");
 
@@ -120,25 +157,7 @@ async function jobApplicationWorkflow() {
   });
 
   try {
-    let model: ChatOpenAI | ChatGoogleGenerativeAI;
-
-    if (config.gemini.apiKey) {
-      // Initialize the ChatGeminiAI model
-      model = new ChatGoogleGenerativeAI({
-        model: config.gemini.model,
-        temperature: config.gemini.temperature,
-        apiKey: getGeminiApiKey(),
-      });
-      console.log("✅ ChatGeminiAI model initialized");
-    } else {
-      // Initialize the ChatOpenAI model
-      model = new ChatOpenAI({
-        modelName: config.openai.model,
-        temperature: config.openai.temperature,
-        apiKey: getOpenAIApiKey(),
-      });
-      console.log("✅ ChatOpenAI model initialized");
-    }
+    let model: chatModels = configModel();
 
     console.log("🎯 Playwright MCP configuration:", config.mcp.playwright);
 
@@ -663,7 +682,7 @@ async function jobApplicationWorkflow() {
     return { app, mcpClient };
   } catch (error) {
     console.error("❌ Error in Job Application workflow:", error);
-    await mcpClient.close();
+    // await mcpClient.close();
     throw error;
   }
 }
@@ -750,18 +769,18 @@ async function runJobApplication(
     }, 30000); // Check every 30 seconds
 
     // Clean up on process termination
-    process.on("SIGINT", () => {
-      console.log("\n\n🛑 Shutting down...");
-      clearInterval(keepAlive);
-      if (mcpClient) {
-        mcpClient.close().then(() => {
-          console.log("✅ MCP client closed");
-          process.exit(0);
-        });
-      } else {
-        process.exit(0);
-      }
-    });
+    // process.on("SIGINT", () => {
+    //   console.log("\n\n🛑 Shutting down...");
+    //   clearInterval(keepAlive);
+    //   if (mcpClient) {
+    //     mcpClient.close().then(() => {
+    //       console.log("✅ MCP client closed");
+    //       process.exit(0);
+    //     });
+    //   } else {
+    //     process.exit(0);
+    //   }
+    // });
 
     // Return result but don't exit the function
     return result;
@@ -775,7 +794,7 @@ async function runJobApplication(
 if (require.main === module) {
   // Example usage
   const exampleUrl =
-    "https://forms.microsoft.com/pages/responsepage.aspx?id=v4j5cvGGr0GRqy180BHbR5_U2QTabLtJhvoyBWLCzylUMVMwSkc0MEZZSTBNQ0VBWEVUSFlNWlVEWS4u&route=shorturl";
+    "https://apply.workable.com/groundtruth/j/FFCB55146B/apply";
 
   // Example with job description
   const exampleJD = `
