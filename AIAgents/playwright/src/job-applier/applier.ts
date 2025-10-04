@@ -1,4 +1,4 @@
-import { AzureOpenAI, ChatOpenAI } from "@langchain/openai";
+import { ChatOpenAI } from "@langchain/openai";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { StateGraph, Annotation, START, END } from "@langchain/langgraph";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
@@ -120,8 +120,14 @@ function configModel(): chatModels {
       apiKey: getLLMApiKey(),
     });
     console.log("✅ ChatGeminiAI model initialized");
+  } else if (config.llm.provider === "openai") {
+    model = new ChatOpenAI({
+      modelName: config.llm.model,
+      temperature: config.llm.temperature,
+      apiKey: getLLMApiKey(),
+    });
+    console.log("✅ ChatOpenAI model initialized");
   } else if (
-    config.llm.provider === "openai" ||
     config.llm.provider === "azure" ||
     config.llm.provider === "openrouter"
   ) {
@@ -514,18 +520,7 @@ async function jobApplicationWorkflow() {
           5. Verify file appears in the form
           6. Take screenshot to confirm
           
-          Remember: Navigate through ALL pages but DO NOT SUBMIT!
-          
-          CRITICAL BROWSER PERSISTENCE RULES:
-          - NEVER call browser.close() or page.close()
-          - NEVER use any commands that close browser windows
-          - DO NOT navigate away from the completed form
-          - Keep all browser tabs and windows open
-          - After completing the form filling, KEEP THE BROWSER OPEN
-          - Do NOT close any browser windows or tabs
-          - Take a final screenshot showing the completed form
-          - End with a message that the browser is ready for manual review
-          - The browser session must remain active for user review`,
+          Remember: Navigate through ALL pages, fill details but DO NOT SUBMIT!`,
         ],
         [
           "human",
@@ -762,12 +757,6 @@ async function runJobApplication(
       "💡 Press Ctrl+C to exit and close browser when done reviewing"
     );
 
-    // Set up a keep-alive mechanism
-    const keepAlive = setInterval(() => {
-      // This interval keeps the Node.js process alive
-      // which prevents the MCP server from shutting down
-    }, 30000); // Check every 30 seconds
-
     // Clean up on process termination
     // process.on("SIGINT", () => {
     //   console.log("\n\n🛑 Shutting down...");
@@ -794,7 +783,7 @@ async function runJobApplication(
 if (require.main === module) {
   // Example usage
   const exampleUrl =
-    "https://apply.workable.com/groundtruth/j/FFCB55146B/apply";
+    "https://docs.google.com/forms/d/e/1FAIpQLSfraX6t7Tml7-aeSkk2toMPHwF8_MXxg_NUQasi31AA2bw8Fw/viewform";
 
   // Example with job description
   const exampleJD = `
@@ -809,10 +798,13 @@ India.
   `;
 
   // Run with job description (recommended)
-  runJobApplication(exampleUrl, exampleJD)
+  runJobApplication(exampleUrl)
     .then(() => {
-      console.log("\n🎉 Job Application automation completed!");
-      process.exit(0);
+      console.log("\n🎉 Job application automation completed!");
+      // Keep process alive
+      setInterval(() => {
+        console.log("🔄 Browser session active - check browser window");
+      }, 30000);
     })
     .catch((error) => {
       console.error(

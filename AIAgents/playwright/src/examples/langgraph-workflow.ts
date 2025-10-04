@@ -2,7 +2,7 @@ import { ChatOpenAI } from '@langchain/openai';
 import { StateGraph, Annotation, START, END } from '@langchain/langgraph';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { HumanMessage, AIMessage, type BaseMessage } from '@langchain/core/messages';
-import { config, getOpenAIApiKey } from '../utils/config';
+import { config, getLLMApiKey } from '../utils/config';
 
 /**
  * LangGraph Workflow Example
@@ -42,9 +42,9 @@ async function langGraphWorkflowExample() {
   try {
     // Initialize the ChatOpenAI model
     const model = new ChatOpenAI({
-      modelName: config.openai.model,
-      temperature: config.openai.temperature,
-      apiKey: getOpenAIApiKey(),
+      modelName: config.llm.model,
+      temperature: config.llm.temperature,
+      apiKey: getLLMApiKey(),
     });
 
     console.log('✅ ChatOpenAI model initialized');

@@ -10,7 +10,7 @@ export const config = {
     baseUrl: process.env.LLM_API_BASE_URL || "https://api.llm.ai/v1",
     model: process.env.LLM_API_MODEL || "llama3",
     provider: process.env.LLM_API_PROVIDER || "openai", // openai, azure, anthropic, google, openrouter
-    temperature: 0,
+    temperature: 0.8,
     ...JSON.parse(process.env.LLM_API_EXTRA_OPTIONS || "{}"),
   },
   mcp: {

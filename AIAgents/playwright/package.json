@@ -11,6 +11,8 @@
     "basic-example": "ts-node src/examples/basic-langchain.ts",
     "mcp-example": "ts-node src/examples/mcp-integration.ts",
     "langgraph-example": "ts-node src/examples/langgraph-workflow.ts",
+    "ui-test": "ts-node src/uiTesting/cli.ts",
+    "ui-test-example": "ts-node src/uiTesting/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -31,7 +33,8 @@
     "@langchain/openai": "",
     "@modelcontextprotocol/sdk": "",
     "@playwright/mcp": "^0.0.41",
-    "@types/node": "^24.3.1",
+    "@types/node": "^24.6.2",
+    "chalk": "^5.6.2",
     "dotenv": "",
     "ts-node": "",
     "typescript": ""
