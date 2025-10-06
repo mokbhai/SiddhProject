@@ -10,8 +10,8 @@ import {
 import { config, getLLMApiKey } from "../utils/config";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { MultiServerMCPClient } from "@langchain/mcp-adapters";
-import path from "path";
-import fs from "fs";
+import * as path from "path";
+import * as fs from "fs";
 
 /**
  * UI Testing Automation Workflow
@@ -67,56 +67,17 @@ const UITestingState = Annotation.Root({
   status: Annotation<string>({
     reducer: (x, y) => y ?? x,
   }),
+  analysisDepth: Annotation<string>({
+    reducer: (x, y) => y ?? x,
+  }),
+  shouldProceed: Annotation<boolean>({
+    reducer: (x, y) => y ?? x,
+  }),
 });
 
 type chatModels = ChatOpenAI | ChatGoogleGenerativeAI;
 
 type UITestingStateType = typeof UITestingState.State;
-
-/**
- * Helper function to handle tool calls in a loop until completion
- * @param initialResult - The initial AI response that may contain tool calls
- * @param modelWithTools - The model bound with MCP tools
- * @param mcpTools - Array of available MCP tools
- * @param context - Context string for logging (e.g., "JD extraction", "form filling")
- * @returns The final AI response after all tool calls are completed
- */
-async function handleToolCalls(
-  initialResult: any,
-  modelWithTools: any,
-  mcpTools: any[],
-  context: string = "tool execution"
-) {
-  // Initialize messages with the AI's response
-  let messages = [initialResult];
-  let currentMessage = initialResult;
-
-  // Handle tool calls if any
-  while (currentMessage.tool_calls && currentMessage.tool_calls.length > 0) {
-    console.log(
-      `🔧 Executing ${currentMessage.tool_calls.length} tool calls for ${context}...`
-    );
-
-    // Create a ToolNode to execute the tools
-    const toolNode = new ToolNode(mcpTools || []);
-
-    // Execute the tools
-    const toolResults = await toolNode.invoke({
-      messages: messages,
-    });
-
-    // Add tool results to messages
-    if (toolResults.messages) {
-      messages = messages.concat(toolResults.messages);
-    }
-
-    // Get the next response from the model
-    currentMessage = await modelWithTools.invoke(messages);
-    messages.push(currentMessage);
-  }
-
-  return currentMessage;
-}
 
 function configModel(): chatModels {
   let model: chatModels;
@@ -128,8 +89,14 @@ function configModel(): chatModels {
       apiKey: getLLMApiKey(),
     });
     console.log("✅ ChatGeminiAI model initialized");
+  } else if (config.llm.provider === "openai") {
+    model = new ChatOpenAI({
+      modelName: config.llm.model,
+      temperature: config.llm.temperature,
+      apiKey: getLLMApiKey(),
+    });
+    console.log("✅ ChatOpenAI model initialized");
   } else if (
-    config.llm.provider === "openai" ||
     config.llm.provider === "azure" ||
     config.llm.provider === "openrouter"
   ) {
@@ -230,133 +197,79 @@ async function uiTestingWorkflow() {
       };
     };
 
-    // 3. Execute UI Testing Node - Performs direct automation based on instructions
+    // 3. Execute UI Testing Node - Provides initial instructions to the agent
     const executeUITestingNode = async (state: UITestingStateType) => {
-      console.log("🤖 Executing UI testing automation...");
+      console.log("🤖 Setting up UI testing automation instructions...");
 
       // Create comprehensive instructions for UI testing
-      const uiTestingPrompt = ChatPromptTemplate.fromMessages([
-        [
-          "system",
-          `You are an expert UI/UX tester with access to Playwright browser automation tools.
+      const testingInstructions = `You are an expert UI/UX tester with access to Playwright browser automation tools.
           
-          You have access to Playwright MCP tools to:
-          1. Navigate to web pages
-          2. Take screenshots at different stages
-          3. Interact with UI elements (click, type, hover, etc.)
-          4. Fill forms and input fields
-          5. Click buttons, links, and navigation elements
-          6. Handle authentication and login flows
-          7. Navigate through multi-step processes
-          8. Test specific functionality as requested
-          
-          DIRECT AUTOMATION APPROACH:
-          Follow the user's specific instructions step by step:
-          1. **Navigate to the target URL**
-          2. **Execute each instruction in sequence:**
-             - Login with provided credentials
-             - Navigate to specified sections/buttons
-             - Fill forms with given data
-             - Click buttons and links as instructed
-             - Test specific functionality mentioned
-             - Verify expected behavior
-          3. **Document everything:**
-             - Take screenshots at each major step
-             - Record all actions performed
-             - Note any issues or unexpected behavior
-             - Capture successful completions
-          
-          CRITICAL DOCUMENTATION REQUIREMENTS:
-          - Take screenshots at key testing points
-          - Document every action performed
-          - Record any issues or bugs found
-          - Note positive aspects and good UX patterns
-          - Capture performance observations
-          - Document accessibility findings
-          
-          BROWSER PERSISTENCE RULES:
-          - Keep browser open throughout testing
-          - Take regular screenshots for documentation
-          - Use headed mode for visibility
-          - Do NOT close browser windows
-          - Maintain browser session for analysis
-          
-          Record all actions performed for the analysis report.`,
-        ],
-        [
-          "human",
-          `Please follow these specific automation instructions: {instructions}
-          
-          Target URL: {url}
-          
-          Use the Playwright tools to:
-          1. Navigate to the specified URL
-          2. Follow each instruction step by step exactly as described
-          3. Take screenshots at important steps
-          4. Document all actions and observations
-          5. Test any specific functionality mentioned in the instructions
-          6. Report on whether the expected behavior occurred
-          
-          Execute the instructions precisely and document everything you do.
-          
-          IMPORTANT: Keep browser open for analysis and reporting phases.`,
-        ],
-      ]);
+Your ultimate goal is to perform all the actions that user has instructed to and do not END until all the operations are completed!!
 
-      try {
-        const chain = uiTestingPrompt.pipe(modelWithTools);
-        const initialResult = await chain.invoke({
-          url: state.targetUrl,
-          instructions: state.testingInstructions,
-        });
+You have access to Playwright MCP tools to:
+1. Navigate to web pages
+2. Take screenshots at different stages
+3. Interact with UI elements (click, type, hover, etc.)
+4. Fill forms and input fields
+5. Click buttons, links, and navigation elements
+6. Handle authentication and login flows
+7. Navigate through multi-step processes
+8. Test specific functionality as requested
 
-        // Handle tool calls using the helper function
-        const currentMessage = await handleToolCalls(
-          initialResult,
-          modelWithTools,
-          state.mcpTools || [],
-          "UI testing execution"
-        );
+DIRECT AUTOMATION APPROACH:
+Follow the user's specific instructions step by step:
+1. **Navigate to the target URL: ${state.targetUrl}**
+2. **Execute each instruction in sequence:**
+   ${state.testingInstructions}
+3. **Document everything:**
+   - Take screenshots at each major step
+   - Record all actions performed
+   - Note any issues or unexpected behavior
+   - Capture successful completions
 
-        const testResults =
-          typeof currentMessage.content === "string"
-            ? currentMessage.content
-            : JSON.stringify(currentMessage.content);
+CRITICAL DOCUMENTATION REQUIREMENTS:
+- Take screenshots at key testing points
+- Document every action performed
+- Record any issues or bugs found
+- Note positive aspects and good UX patterns
+- Capture performance observations
+- Document accessibility findings
 
-        console.log("🎉 UI testing execution completed");
+BROWSER PERSISTENCE RULES:
+- Keep browser open throughout testing
+- Take regular screenshots for documentation
+- Use headed mode for visibility
+- Do NOT close browser windows
+- Maintain browser session for analysis
 
-        return {
-          messages: [new AIMessage(testResults)],
-          currentStep: "testing_executed",
-          testResults,
-          status: "testing_complete",
-        };
-      } catch (error) {
-        console.error("❌ Error during UI testing execution:", error);
+Record all actions performed for the analysis report.
 
-        const fallbackResults = `
-          ⚠️ UI testing encountered an issue. Fallback documentation used.
-          
-          Target URL: ${state.targetUrl}
-          Testing Instructions: ${state.testingInstructions}
-          
-          Error: ${error instanceof Error ? error.message : String(error)}
-          
-          Please check MCP configuration or try manual testing.
-        `;
+Please start by navigating to the target URL and then follow the testing instructions step by step.`;
 
-        return {
-          messages: [new AIMessage(fallbackResults)],
-          currentStep: "testing_executed",
-          testResults: fallbackResults,
-          status: "testing_complete_with_errors",
-        };
-      }
+      // Add the testing instructions as a human message to guide the agent
+      const instructionMessage = new HumanMessage(testingInstructions);
+
+      return {
+        messages: [...(state.messages || []), instructionMessage],
+        currentStep: "testing_instructions_set",
+        status: "ready_for_automation",
+      };
     };
 
-    // 4. Analyze Test Results Node - Analyzes all performed actions
+    // 5. Analyze Test Results Node - Analyzes all performed actions
     const analyzeTestResultsNode = async (state: UITestingStateType) => {
       console.log("🔍 Analyzing test results and actions...");
+
+      // Extract test results from the message history
+      const allMessages = state.messages || [];
+      const testResults = allMessages
+        .filter((msg) => msg instanceof AIMessage)
+        .map((msg) =>
+          typeof msg.content === "string"
+            ? msg.content
+            : JSON.stringify(msg.content)
+        )
+        .join("\n\n");
 
       const analysisPrompt = ChatPromptTemplate.fromMessages([
         [
@@ -403,7 +316,7 @@ async function uiTestingWorkflow() {
           
           Target URL: {url}
           Instructions Given: {instructions}
-          Automation Results: {results}
+          Automation Messages: {results}
           
           Provide a comprehensive analysis of what happened during the automation and any issues found.`,
         ],
@@ -413,7 +326,7 @@ async function uiTestingWorkflow() {
       const result = await chain.invoke({
         url: state.targetUrl,
         instructions: state.testingInstructions,
-        results: state.testResults,
+        results: testResults,
       });
 
       const analysisReport =
@@ -424,13 +337,17 @@ async function uiTestingWorkflow() {
       console.log("✅ Test results analysis completed");
 
       return {
-        messages: [new AIMessage(`Analysis Report: ${analysisReport}`)],
+        messages: [
+          ...(state.messages || []),
+          new AIMessage(`Analysis Report: ${analysisReport}`),
+        ],
         currentStep: "results_analyzed",
         analysisReport,
+        testResults,
       };
     };
 
-    // 5. Generate Summary Report Node - Creates comprehensive summary
+    // 6. Generate Summary Report Node - Creates comprehensive summary
     const generateSummaryReportNode = async (state: UITestingStateType) => {
       console.log("📋 Generating comprehensive summary report...");
 
@@ -533,19 +450,51 @@ async function uiTestingWorkflow() {
       };
     };
 
-    // 6. Build the StateGraph
+    // Define the function that determines whether to continue with tools or proceed to analysis
+    const shouldContinueWithTools = ({ messages }: any) => {
+      const lastMessage = messages[messages.length - 1] as AIMessage;
+
+      // If the LLM makes a tool call, continue with tools
+      if (lastMessage.tool_calls?.length) {
+        return "tools";
+      }
+      // Otherwise, proceed to analysis
+      return "analyze_results";
+    };
+
+    // Define the agent function that calls the model for tool execution
+    const callModelForTools = async (state: UITestingStateType) => {
+      const response = await modelWithTools.invoke(state.messages || [], {
+        recursionLimit: 50,
+      });
+
+      console.log("Model response:", response.tool_calls || "No tool calls");
+      return {
+        messages: [...(state.messages || []), response],
+        currentStep: "agent_called",
+      };
+    };
+
+    // Create tool node
+    const toolNode = new ToolNode(mcpTools);
+
+    // 7. Build the StateGraph with proper agent-tools loop
     console.log("🏗️ Building UI Testing workflow...");
 
     const workflow = new StateGraph(UITestingState)
       .addNode("setup_mcp", setupMCPToolsNode)
       .addNode("parse_input", parseUserInputNode)
       .addNode("execute_testing", executeUITestingNode)
+      .addNode("agent", callModelForTools)
+      .addNode("tools", toolNode)
       .addNode("analyze_results", analyzeTestResultsNode)
       .addNode("generate_report", generateSummaryReportNode)
       .addEdge(START, "setup_mcp")
       .addEdge("setup_mcp", "parse_input")
       .addEdge("parse_input", "execute_testing")
-      .addEdge("execute_testing", "analyze_results")
+      .addEdge("execute_testing", "agent")
+      .addEdge("tools", "agent")
+      .addConditionalEdges("agent", shouldContinueWithTools)
       .addEdge("analyze_results", "generate_report")
       .addEdge("generate_report", END);
 
@@ -649,7 +598,9 @@ async function runUITesting(userPrompt: string) {
 // Example usage function for testing
 async function runExample() {
   const examplePrompts = [
-    "go to https://dashboard.mindler.com/login\nuse credentials drcode1@gmail.com, password: 12345\ngo to all services button, open assessment, start answering questions from mcq. select random answers. after 5 answers, try to go back and verify the back functionality. ideally it should be able to go back only one question. try going back more than one question and confirm if it is happening or not?"
+    "go to https://dashboard.mindler.com/login\nuse credentials drcode1@gmail.com, password: 12345\ngo to all services button, open assessment, start answering questions from mcq. select random answers. after 5 answers, try to go back and verify the back functionality. ideally it should be able to go back only one question. try going back more than one question and confirm if it is happening or not?" +
+      "If found any popup related to orion ai close it ASAP\n ALWAYS CHECK FOR POPUPS AND RESPONSE ACCORDINGLY" +
+      "\n you are allowed to use the playwright tools.",
   ];
 
   const selectedPrompt = examplePrompts[0];

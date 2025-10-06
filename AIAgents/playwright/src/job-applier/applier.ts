@@ -12,6 +12,11 @@ import { detailedResume } from "./detailedResume";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { MultiServerMCPClient } from "@langchain/mcp-adapters";
 import path from "path";
+import { setMaxListeners } from "events";
+
+// Set higher limits to prevent MaxListenersExceededWarning
+setMaxListeners(20); // Increase limit for EventEmitter instances
+process.setMaxListeners(0); // Remove limit for process events
 
 /**
  * Job Application Automation Workflow
