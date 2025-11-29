@@ -1,0 +1,104 @@
+personalInfo:
+  name: MOKSHIT JAIN
+  phone: +91-7000209021
+  email: mokshitjain18@gmail.com
+  linkedin: "https://linkedin.com/in/mokshit-jain"
+  github: "https://github.com/mokbhai"
+  bio: "https://mokshit-bio.jainparichay.in"
+  resumeUrl: "https://mokshit-bio.jainparichay.in/resume"
+  resumePdf: ./resume.pdf
+applicationFields:
+  currentLocation:
+    city: Bhawani Mandi
+    state: Rajasthan
+    country: India
+    pincode: "326502"
+  preferredLocations[6]: "Bangalore, Karnataka, India","Hyderabad, Telangana, India","Pune, Maharashtra, India","Gurgaon, Haryana, India","Mumbai, Maharashtra, India",Remote
+  willingToRelocate: Yes
+  workPreference: Any - Remote preferred
+  salaryExpectations:
+    currency: INR
+    minimum: "1000000"
+    maximum: "2000000"
+    preferred: "1500000"
+    negotiable: true
+  workAuthorization:
+    countryOfCitizenship: India
+    currentVisaStatus: Indian Citizen
+    requiresSponsorship: No
+    authorizedToWorkIn[1]: India
+    willingToWorkInternationally: Yes
+  availability:
+    startDate: After notice period
+    noticePeriod: 45 days
+    availableForFullTime: Yes
+    availableForPartTime: Yes
+    availableForInternship: Yes
+    availableForContract: Yes
+  backgroundInfo:
+    veteranStatus: Not Applicable
+    disabilityStatus: No
+    genderIdentity: Male
+    ethnicity: Asian/Indian
+    dateOfBirth: 2004-02-10
+    maritalStatus: Single
+  emergencyContact:
+    name: Kamlesh Kumar Jain
+    relationship: Father
+    phone: +91-9829718593
+  references[1]{name,position,company,email,phone,relationship}:
+    Available upon request,"","","","",Professional Reference
+  additionalInfo:
+    languages[3]{name,proficiency}:
+      English,Fluent
+      Hindi,Native
+      Punjabi,Native
+    certifications[0]:
+    portfolioUrl: "https://mokshit-bio.jainparichay.in"
+    personalWebsite: "https://mokshit-bio.jainparichay.in"
+    socialMedia:
+      youtube: "https://www.youtube.com/@mokbhaimj"
+      twitter: ""
+      instagram: ""
+  commonQuestions:
+    whyInterestedInCompany: "I am drawn to [Company] because of its innovative approach to [specific area] and commitment to [company values]. The opportunity to work on [specific projects/technologies] aligns perfectly with my career goals and passion for technology."
+    whyInterestedInRole: "This role excites me because it combines my technical skills with my interest in [specific area]. I am particularly attracted to the opportunity to [specific responsibility] and contribute to [specific goal/project]."
+    careerGoals: My goal is to become a well-rounded technology professional who can bridge the gap between technical implementation and business impact. I aim to work on innovative projects that solve real-world problems and create meaningful user experiences.
+    greatestStrength: "My greatest strength is my ability to quickly adapt and learn new technologies while maintaining a user-centric approach. I combine technical skills with strong communication abilities, allowing me to work effectively across different teams and stakeholders."
+    greatestWeakness: "I sometimes spend too much time perfecting details, but I've learned to balance thoroughness with meeting deadlines by setting clear priorities and time boundaries."
+    whyHireYou: "You should hire me because I bring a unique combination of technical expertise, product thinking, and collaborative skills. My experience working directly with founders and cross-functional teams has taught me to deliver solutions that meet both technical requirements and business objectives."
+careerObjective: "Resourceful Computer Science student and versatile software developer with a passion for technology, product innovation, and emotional wellness. Eager to work directly with founders to ideate, research, and develop solutions that drive impact. Adept at collaborating with cross-functional teams, conducting research, and applying AI, automation, and data-driven approaches to solve real-world problems."
+education[1]{institution,degree,duration,cgpa}:
+  Collage - Lovely Professional University,"B.Tech, Computer Science","2022–2026, currently in 4th year, 7th semester",7.8/10
+experience[2]:
+  - position: Software Developer Intern
+    company: AIRIA
+    duration: Apr 2025 – Present
+    location: Remote
+    responsibilities[5]: "Worked closely with product and leadership teams to ideate, develop, and deliver AI-powered solutions","Managed client communications, coordinated product demos, and ensured smooth client onboarding and feedback integration","Currently developing an advanced UI testing tool that automates browser interactions and website testing, leveraging AI-agents automation and LangGraph workflows","Led end-to-end development of a fitness application, integrating both AI agents and user-centred design to improve health and workout outcomes","Actively participated in sprint reviews, and cross-functional collaboration, ensuring a clear understanding of business needs and user experience"
+  - position: Freelancer
+    company: Innovation Studio LPU & Ministry of Defence
+    duration: Nov 2024 – Jan 2025
+    location: Remote
+    responsibilities[3]: Collaborating with stakeholders to define requirements and deliver features ahead of schedule,"Architectured microservices for vehicle validation, checkpoint logging, and e2e monitoring with optimised Prisma PostgreSQL queries","Enhanced system security with Permission Management, Role-Based Access Control (RBAC), and secure session management"
+    demoLink: "https://youtu.be/3xswnyAoGAU"
+projects[2]:
+  - name: "AutoTube: AI-Powered Text-to-Video Generator"
+    description: "Developed pipeline that converts text into YouTube-ready videos, automating content creation process"
+    technologies[3]: Python,Google Translate,Edge TTS
+    features[1]: Integrated multilingual support and natural voiceovers
+    link: "https://www.youtube.com/@mokbhaimj"
+  - name: "Thrombocizer: Assistive Exercise Device"
+    description: Led technical development for a wellness-focused leg movement device for paralysed patients
+    features[2]: Developed easy-to-use interfaces and real-time monitoring tools,Keeping user well-being at the centre of product design
+skills:
+  productAndCrossFunctional[8]: Product Ideation & Management,Data-driven Decision Making,Agile Methodologies,Communication,Critical thinking,Teamwork abilities,Stakeholder Management,User-Centric Design
+  technical:
+    programming[4]: JavaScript,Python,Node.js,SQL
+    aiAutomation[4]: AI Agents,LangGraph,WhatsApp Bots,OpenAI
+    frameworks[3]: Astro.js,Next.js,Nest.js
+    devOps[4]: Git,Docker,AWS EC2,CI/CD
+    databases[4]: MongoDB,PostgreSQL,ChromaDB,Pinecone
+awards[2]{title,event}:
+  1st Runner Up,MEDHA Medical Device Hackathon 2024
+  Participant,Hack IT Sapiens 2.0
